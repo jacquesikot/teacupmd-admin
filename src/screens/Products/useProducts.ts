@@ -14,29 +14,6 @@ const useProducts = () => {
   const [products, setProducts] = useState<any>([]);
   const [onSale, setOnSale] = useState<boolean>(false);
 
-  const getCategories = async () => {
-    const categories = await firebaseFunc.getCategories();
-    setCategories(categories);
-  };
-
-  const getProducts = async () => {
-    const products = await firebaseFunc.getProducts();
-    setProducts(products);
-  };
-
-  useEffect(() => {
-    getCategories();
-    getProducts();
-  }, []);
-
-  const productSchema = Yup.object().shape({
-    title: Yup.string(),
-    details: Yup.string(),
-    price: Yup.string(),
-    sale_price: Yup.string(),
-    nutrition_details: Yup.string(),
-  });
-
   const onFileChange = (e) => {
     setFile(e.target.files);
   };
@@ -78,33 +55,9 @@ const useProducts = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    try {
-      await firebaseFunc.deleteProduct(id);
-      toast({
-        title: 'Products',
-        description: 'product deleted succesfully',
-        status: 'success',
-        duration: 7000,
-        isClosable: true,
-        position: 'top',
-      });
-    } catch (error) {
-      toast({
-        title: 'Products',
-        description: 'Failed to delete product',
-        status: 'error',
-        duration: 7000,
-        isClosable: true,
-        position: 'top',
-      });
-    }
-  };
-
   return {
     handleSubmit,
     loading,
-    productSchema,
     images,
     onFileChange,
     setOnSale,
@@ -112,7 +65,6 @@ const useProducts = () => {
     setCategory,
     categories,
     products,
-    handleDelete,
   };
 };
 
